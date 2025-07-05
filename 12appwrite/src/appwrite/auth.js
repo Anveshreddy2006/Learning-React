@@ -1,18 +1,20 @@
 import conf from '../conf/conf.js';
 import { Client, Account, ID } from "appwrite";
 
-export class AuthService {
 
-     client = new Client();
+export class AuthService {
+    client = new Client();
     account;
 
     constructor() {
         this.client
-            .setEndpoint(conf.appWriteUrl)
-            .setProject(conf.appWriteProjectId);
+            .setEndpoint(conf.appwriteUrl)
+            .setProject(conf.appwriteProjectId);
         this.account = new Account(this.client);
+            
     }
-    async creatAccount({email, password, name}){
+
+    async createAccount({email, password, name}) {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
             if (userAccount) {
@@ -25,14 +27,16 @@ export class AuthService {
             throw error;
         }
     }
-    async login(email, password){
-         try {
+
+    async login({email, password}) {
+        try {
             return await this.account.createEmailSession(email, password);
         } catch (error) {
             throw error;
         }
     }
-    async getCurrentUser(){
+
+    async getCurrentUser() {
         try {
             return await this.account.get();
         } catch (error) {
@@ -42,13 +46,13 @@ export class AuthService {
         return null;
     }
 
-    async logout(){
-       try {
+    async logout() {
+
+        try {
             await this.account.deleteSessions();
         } catch (error) {
             console.log("Appwrite serive :: logout :: error", error);
         }
-    
     }
 }
 
