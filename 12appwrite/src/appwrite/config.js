@@ -4,7 +4,7 @@ import { Client, ID, Databases, Storage, Query }
 
 export class Service {
     client = new Client();
-    databases;
+    databases;                                                                                                                                                                  
     buckets;
 
     constructor() {
